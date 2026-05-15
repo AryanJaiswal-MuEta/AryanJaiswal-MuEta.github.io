@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - ARYAN JAISWAL</title>
+  <meta name="view-transition" content="same-origin" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@300;400;600&family=Cormorant+Garamond:ital,wght@1,400;1,600&display=swap"
+    rel="stylesheet">
+  <link href="../mode-toggle.css" rel="stylesheet">
+  <style>
+    body.light-mode {
+      --bg: #e5e0c5;
+      --text: #2d2a27;
+      --accent: #6b5c4f;
+      --grid-dot: rgba(107, 92, 79, 0.15);
+      --card-bg: #e5e0c5;
+      --input-bg: rgba(0, 0, 0, 0.03);
+      --input-border: rgba(107, 92, 79, 0.2);
+      --map-filter: grayscale(0.2) contrast(1);
+    }
+
+    :root {
+      --bg: #080a09;
+      --text: #e0e0e0;
+      --accent: #4ade80;
+      --grid-dot: rgba(255, 255, 255, 0.05);
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --input-bg: rgba(255, 255, 255, 0.02);
+      --input-border: rgba(255, 255, 255, 0.1);
+      --map-filter: grayscale(1) invert(1) hue-rotate(180deg) brightness(0.8) contrast(1.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+      transition: background-color 0.5s ease;
+    }
+
+    .particles-container {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Dots Grid Background */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: -1;
+    }
+
+    /* Navigation */
+    .nav-bar {
+      position: fixed;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 30px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(15px);
+      padding: 12px 35px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    body.light-mode .nav-bar {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: rgba(107, 92, 79, 0.15);
+    }
+
+    .nav-bar a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      transition: 0.3s ease;
+    }
+
+    .nav-bar a:hover,
+    .nav-bar a.active {
+      opacity: 1;
+    }
+
+    /* Main Container */
+    .page-wrapper {
+      width: 100%;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 180px 24px 60px;
+    }
+
+    /* Hero Section */
+    .contact-hero {
+      position: relative;
+      text-align: center;
+      margin-bottom: 100px;
+      width: 100%;
+    }
+
+    .hero-hands {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -45%);
+      width: clamp(350px, 80vw, 900px);
+      z-index: -1;
+      opacity: 0.5;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      filter: invert(1);
+    }
+
+    body.light-mode .hero-hands {
+      filter: none;
+      opacity: 0.5;
+      mix-blend-mode: multiply;
+    }
+
+    .contact-hero h1 {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      line-height: 0.9;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .contact-hero h1 em {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      text-transform: none;
+      display: block;
+      font-size: 0.8em;
+      margin-top: -10px;
+    }
+
+    .contact-hero p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 30px auto 0;
+      opacity: 1;
+      line-height: 1.6;
+      text-shadow: 0 1px 2px rgba(238, 232, 213, 0.4);
+    }
+
+    /* Content Grid */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* Common Card Style */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--input-border);
+      border-radius: 32px;
+      padding: 40px;
+    }
+
+    /* Left Side: Form */
+    .form-card small {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 11px;
+      opacity: 0.5;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .form-card h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-style: italic;
+      font-weight: 400;
+      margin-bottom: 40px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+      opacity: 0.5;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .form-group textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 18px;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    /* Right Side: Info & Map */
+    .info-card {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      padding-top: 45px;
+    }
+
+    .info-intro {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      opacity: 0.8;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .detail-item {
+      padding: 24px;
+      border: 1px solid var(--input-border);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .detail-item h3 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      opacity: 0.6;
+    }
+
+    .detail-item p,
+    .detail-item a {
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .map-box {
+      width: 100%;
+      height: 250px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--input-border);
+    }
+
+    .map-box iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      filter: var(--map-filter);
+    }
+
+    /* Site Footer */
+    .site-footer {
+      width: 100%;
+      margin-top: 120px;
+      padding-top: 80px;
+      border-top: 1px solid var(--input-border);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.5fr;
+      gap: 60px;
+      margin-bottom: 80px;
+    }
+
+    .footer-column h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+    }
+
+    .footer-column h3 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      opacity: 0.8;
+    }
+
+    .footer-column p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      opacity: 0.6;
+      margin-bottom: 20px;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-column ul li a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      opacity: 0.6;
+      transition: 0.3s;
+    }
+
+    .footer-column ul li a:hover {
+      opacity: 1;
+      padding-left: 5px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 12px;
+    }
+
+    .social-links a {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--input-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+      transition: 0.3s;
+      background: var(--input-bg);
+    }
+
+    .social-links a:hover {
+      background: var(--text);
+      color: var(--bg);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 40px 0;
+      font-size: 12px;
+      opacity: 0.4;
+      border-top: 1px solid var(--input-border);
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 1024px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-wrapper {
+        padding: 140px 20px 60px;
+      }
+
+      .contact-hero h1 {
+        font-size: 4rem;
+      }
+
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .social-links {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="nav-bar">
+    <a href="../index.html">Home</a>
+    <a href="./about.html">About</a>
+    <a href="./projects.html">Work</a>
+    <a href="./contact.html" class="active">Contact</a>
+  </nav>
+
+  <div class="particles-container" id="particles-bg"></div>
+  <div class="page-wrapper">
+    <section class="contact-hero">
+      <div class="hero-hands">
+        <img src="../images/hands-joining.png" alt="" style="width: 100%; height: auto;">
+      </div>
+      <h1>
+        Build
+        <em>Together</em>
+      </h1>
+      <p>Whether you're starting a new brand or scaling a product, I'm here to bring your vision to life with cinematic
+        precision.</p>
+    </section>
+
+    <main class="content-grid">
+      <!-- Left: Form -->
+      <section class="card form-card">
+        <small>Contact</small>
+        <h2>Start A Project</h2>
+        <form id="contact-form">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="yourmail@gmail.com" required>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell me your idea, timeline, and the kind of build you need..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Brief</button>
+        </form>
+      </section>
+
+      <!-- Right: Info & Map -->
+      <section class="info-card">
+        <p class="info-intro">
+          I usually respond fastest to clear project requests with goal, style direction, deadline, and references. We
+          can start small and iterate quickly.
+        </p>
+
+        <div class="details-grid">
+          <div class="detail-item">
+            <h3>Email</h3>
+            <p>aryan.jaiswal@students.iiit.ac.in</p>
+          </div>
+          <div class="detail-item">
+            <h3>Phone</h3>
+            <p>+91 91711 31999</p>
+          </div>
+          <div class="detail-item">
+            <h3>GitHub</h3>
+            <p><a href="https://github.com/Aaryan12706" target="_blank">github.com/Aaryan12706</a></p>
+          </div>
+          <div class="detail-item">
+            <h3>Work Mode</h3>
+            <p>Remote / Hyderabad, India</p>
+          </div>
+        </div>
+
+        <div class="map-box">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.2989255755497!2d78.34293227593678!3d17.4453360011111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb93a23737f3f7%3A0x640984f41183edb6!2sOBH%20D%20Block!5e0!3m2!1sen!2sin!4v1747298285513!5m2!1sen!2sin"
+            allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h2>AKJ DEV</h2>
+          <p>Frontend-focused student developer building stronger portfolio experiences with cleaner structure and
+            intentional visual motion.</p>
+          <div class="social-links">
+            <a href="https://www.instagram.com/dudenotaryan/" target="_blank">ig</a>
+            <a href="#">x</a>
+            <a href="https://www.linkedin.com/in/aryan-jaiswal-99b8b2308/" target="_blank">in</a>
+          </div>
+        </div>
+        <div class="footer-column">
+          <h3>Navigation</h3>
+          <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./projects.html">Work</a></li>
+            <li><a href="./contact.html">Talk</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Location</h3>
+          <p>Hyderabad, Telangana</p>
+          <p>India</p>
+          <p>Available for remote collaboration</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        Copyright 2026 AKJ DEV | Powered by Aryan Kumar Jaiswal
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="../mode-toggle.js" defer></script>
+  <script type="module">
+    import { Renderer, Camera, Geometry, Program, Mesh } from 'https://cdn.jsdelivr.net/npm/ogl@0.0.32/dist/ogl.mjs';
+
+    const defaultColors = ['#ffffff', '#ffffff', '#ffffff'];
+
+    const hexToRgb = hex => {
+      hex = hex.replace(/^#/, '');
+      if (hex.length === 3) {
+        hex = hex.split('').map(c => c + c).join('');
+      }
+      const int = parseInt(hex, 16);
+      const r = ((int >> 16) & 255) / 255;
+      const g = ((int >> 8) & 255) / 255;
+      const b = (int & 255) / 255;
+      return [r, g, b];
+    };
+
+    const vertex = `
+      attribute vec3 position;
+      attribute vec4 random;
+      attribute vec3 color;
+      
+      uniform mat4 modelMatrix;
+      uniform mat4 viewMatrix;
+      uniform mat4 projectionMatrix;
+      uniform float uTime;
+      uniform float uSpread;
+      uniform float uBaseSize;
+      uniform float uSizeRandomness;
+      
+      varying vec4 vRandom;
+      varying vec3 vColor;
+      
+      void main() {
+        vRandom = random;
+        vColor = color;
+        
+        vec3 pos = position * uSpread;
+        pos.z *= 10.0;
+        
+        vec4 mPos = modelMatrix * vec4(pos, 1.0);
+        float t = uTime;
+        mPos.x += sin(t * random.z + 6.28 * random.w) * mix(0.1, 1.5, random.x);
+        mPos.y += sin(t * random.y + 6.28 * random.x) * mix(0.1, 1.5, random.w);
+        mPos.z += sin(t * random.w + 6.28 * random.y) * mix(0.1, 1.5, random.z);
+        
+        vec4 mvPos = viewMatrix * mPos;
+        gl_PointSize = (uBaseSize * (1.0 + uSizeRandomness * (random.x - 0.5))) / length(mvPos.xyz);
+        gl_Position = projectionMatrix * mvPos;
+      }
+    `;
+
+    const fragment = `
+      precision highp float;
+      uniform float uTime;
+      uniform float uAlphaParticles;
+      varying vec4 vRandom;
+      varying vec3 vColor;
+      
+      void main() {
+        vec2 uv = gl_PointCoord.xy;
+        float d = length(uv - vec2(0.5));
+        if(uAlphaParticles < 0.5) {
+          if(d > 0.5) discard;
+          gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), 1.0);
+        } else {
+          float circle = smoothstep(0.5, 0.4, d) * 0.8;
+          gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), circle);
+        }
+      }
+    `;
+
+    function initParticles() {
+      const container = document.getElementById('particles-bg');
+      if (!container) return;
+
+      const renderer = new Renderer({ dpr: window.devicePixelRatio, depth: false, alpha: true });
+      const gl = renderer.gl;
+      container.appendChild(gl.canvas);
+      gl.clearColor(0, 0, 0, 0);
+
+      const camera = new Camera(gl, { fov: 15 });
+      camera.position.set(0, 0, 20);
+
+      const resize = () => {
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
+      };
+      window.addEventListener('resize', resize);
+      resize();
+
+      const count = 200;
+      const positions = new Float32Array(count * 3);
+      const randoms = new Float32Array(count * 4);
+      const colors = new Float32Array(count * 3);
+      const palette = defaultColors;
+
+      for (let i = 0; i < count; i++) {
+        let x, y, z, len;
+        do { x = Math.random() * 2 - 1; y = Math.random() * 2 - 1; z = Math.random() * 2 - 1; len = x * x + y * y + z * z; } while (len > 1 || len === 0);
+        const r = Math.cbrt(Math.random());
+        positions.set([x * r, y * r, z * r], i * 3);
+        randoms.set([Math.random(), Math.random(), Math.random(), Math.random()], i * 4);
+        const col = hexToRgb(palette[Math.floor(Math.random() * palette.length)]);
+        colors.set(col, i * 3);
+      }
+
+      const geometry = new Geometry(gl, {
+        position: { size: 3, data: positions },
+        random: { size: 4, data: randoms },
+        color: { size: 3, data: colors }
+      });
+
+      const program = new Program(gl, {
+        vertex, fragment,
+        uniforms: {
+          uTime: { value: 0 },
+          uSpread: { value: 10 },
+          uBaseSize: { value: 100 * window.devicePixelRatio },
+          uSizeRandomness: { value: 1.0 },
+          uAlphaParticles: { value: 1.0 }
+        },
+        transparent: true,
+        depthTest: false
+      });
+
+      const particles = new Mesh(gl, { mode: gl.POINTS, geometry, program });
+
+      function update(t) {
+        requestAnimationFrame(update);
+        program.uniforms.uTime.value = t * 0.0001;
+        particles.rotation.x = Math.sin(t * 0.00002) * 0.1;
+        particles.rotation.y = Math.cos(t * 0.00005) * 0.15;
+        particles.rotation.z += 0.001;
+        renderer.render({ scene: particles, camera });
+      }
+      requestAnimationFrame(update);
+    }
+
+    initParticles();
+  </script>
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('.submit-btn');
+      btn.innerText = "Brief Sent!";
+      btn.style.background = "#4ade80";
+      setTimeout(() => {
+        e.target.reset();
+        btn.innerText = "Send Brief";
+        btn.style.background = "";
+      }, 3000);
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      gsap.from('.contact-hero h1', { opacity: 0, y: 30, duration: 1, ease: 'power4.out' });
+      gsap.from('.card', { opacity: 0, y: 40, stagger: 0.2, duration: 1.2, delay: 0.3, ease: 'power4.out' });
+      gsap.from('.site-footer', { opacity: 0, y: 20, duration: 1, delay: 0.8, ease: 'power4.out' });
+    });
+  </script>
+</body>
+
+</html>

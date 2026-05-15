@@ -1,0 +1,236 @@
+.mode-toggle {
+  position: fixed;
+  top: -10px;
+  right: 20px;
+  z-index: 100000;
+  width: 60px;
+  height: 120px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  box-shadow: none;
+  transition: transform 200ms ease, filter 200ms ease;
+  transform-origin: top center;
+}
+
+.mode-toggle:hover {
+  transform: translateY(8px);
+}
+
+.mode-toggle img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+body:not(.light-mode) .mode-toggle img {
+  /* Scale up sleep icon to match awake icon */
+  transform: scale(1.5);
+}
+
+body.light-mode .mode-toggle img {
+  /* Scale up awake icon as requested */
+  transform: scale(1.5);
+}
+
+/* View Transition API styles for the expanding circle */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+.transitioning-to-light::view-transition-old(root) {
+  z-index: 1;
+}
+.transitioning-to-light::view-transition-new(root) {
+  z-index: 2;
+  clip-path: circle(0px at var(--x, 100%) var(--y, 0%));
+  animation: expand-circle 0.8s cubic-bezier(0.25, 1, 0.3, 1) forwards;
+}
+
+.transitioning-to-dark::view-transition-old(root) {
+  z-index: 2;
+  clip-path: circle(150vmax at var(--x, 100%) var(--y, 0%));
+  animation: shrink-circle 0.8s cubic-bezier(0.25, 1, 0.3, 1) forwards;
+}
+.transitioning-to-dark::view-transition-new(root) {
+  z-index: 1;
+}
+
+@keyframes expand-circle {
+  0% {
+    clip-path: circle(0px at var(--x, 100%) var(--y, 0%));
+  }
+  100% {
+    clip-path: circle(150vmax at var(--x, 100%) var(--y, 0%));
+  }
+}
+
+@keyframes shrink-circle {
+  0% {
+    clip-path: circle(150vmax at var(--x, 100%) var(--y, 0%));
+  }
+  100% {
+    clip-path: circle(0px at var(--x, 100%) var(--y, 0%));
+  }
+}
+
+body.light-mode {
+  background: #eee8d5 !important;
+  color: #2d2a27 !important;
+}
+
+body.light-mode .grain,
+body.light-mode .fx-blur-splash {
+  opacity: 0.02 !important;
+}
+
+body.light-mode .nav,
+body.light-mode .topbar {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.97), rgba(248, 252, 255, 0.95), rgba(255, 255, 255, 0.97)) !important;
+  border-color: rgba(88, 113, 156, 0.3) !important;
+  box-shadow: 0 10px 26px rgba(79, 105, 147, 0.2) !important;
+}
+
+body.light-mode .brand {
+  color: #2a4066 !important;
+  text-shadow: none !important;
+}
+
+body.light-mode .links a,
+body.light-mode .nav a {
+  color: #314a71 !important;
+}
+
+body.light-mode .links a:hover,
+body.light-mode .links a[aria-current="page"],
+body.light-mode .nav .cta,
+body.light-mode .cta {
+  border-color: rgba(84, 112, 158, 0.45) !important;
+  background: rgba(118, 153, 214, 0.15) !important;
+  color: #20375f !important;
+}
+
+body.light-mode .hero,
+body.light-mode .project-timeline,
+body.light-mode .timeline-item,
+body.light-mode .timeline-detail,
+body.light-mode .service-card,
+body.light-mode .work-card,
+body.light-mode .wide-cta,
+body.light-mode .panel,
+body.light-mode .card,
+body.light-mode .contact-panel,
+body.light-mode .info-panel,
+body.light-mode form {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(95, 122, 166, 0.3) !important;
+  color: #203655 !important;
+}
+
+body.light-mode .timeline-item .title,
+body.light-mode .timeline-detail h3,
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4 {
+  color: #233a60 !important;
+}
+
+body.light-mode p,
+body.light-mode span,
+body.light-mode li {
+  color: rgba(31, 50, 82, 0.9) !important;
+}
+
+body.light-mode .scene {
+  background:
+    linear-gradient(180deg, rgba(238, 232, 213, 0.74), rgba(223, 217, 195, 0.82)),
+    url("https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1800&q=80") center / cover no-repeat !important;
+}
+
+/* Stronger global contrast overrides for light mode */
+body.light-mode {
+  --bg: #e5e0c5 !important;
+  background-color: var(--bg) !important;
+  --text: #2d2a27 !important;
+  --muted: rgba(45, 42, 39, 0.9) !important;
+  --soft-white: #3c3836 !important;
+  --accent: #6b5c4f !important;
+  --accent-strong: #4a443f !important;
+}
+
+body.light-mode .fx-metallic,
+body.light-mode .name {
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #132743 !important;
+  text-shadow: none !important;
+}
+
+body.light-mode .hero-copy p,
+body.light-mode .info-copy,
+body.light-mode .timeline-item span,
+body.light-mode .card p,
+body.light-mode .work-meta span,
+body.light-mode .field label,
+body.light-mode .meta,
+body.light-mode .mini {
+  color: #213a60 !important;
+  opacity: 1 !important;
+}
+
+body.light-mode input,
+body.light-mode textarea,
+body.light-mode select {
+  color: #132743 !important;
+  background: rgba(245, 250, 255, 0.98) !important;
+  border-color: rgba(73, 105, 150, 0.45) !important;
+}
+
+body.light-mode input::placeholder,
+body.light-mode textarea::placeholder {
+  color: rgba(19, 39, 67, 0.7) !important;
+}
+
+@media (max-width: 640px) {
+  .mode-toggle {
+    top: -5px;
+    right: 5px;
+  }
+}
+
+/* Page Transitions */
+@keyframes siteFadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Apply animation to content wrappers instead of body to avoid stacking context issues with fixed elements */
+.page-wrapper, .container, .main-hero, .carousel-stage {
+  animation: siteFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+}
+
+/* Hide Scrollbars Globally */
+::-webkit-scrollbar {
+  display: none;
+}
+html, body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (max-width: 640px) {
+  .mode-toggle {
+    width: 45px;
+    height: 90px;
+  }
+}
